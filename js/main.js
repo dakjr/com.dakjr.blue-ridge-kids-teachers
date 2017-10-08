@@ -122,8 +122,8 @@ var app = {
 			b: globalBatteryStatus
 		}, function(jsonp) {
 			
-			if (json.serviceToShow != globalServiceToShow) {
-				globalServiceToShow = json.serviceToShow;
+			if (jsonp.serviceToShow != globalServiceToShow) {
+				globalServiceToShow = jsonp.serviceToShow;
 				
 				// only do loading if we get a positive response and need to change services
 				app.loadingScreen(true);
