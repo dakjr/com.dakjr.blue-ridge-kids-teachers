@@ -25,13 +25,13 @@
 	
 	<platform name="android" />
 	
-	<gap:plugin name="cordova-plugin-device" />
-	<gap:plugin name="cordova-plugin-network-information" />
-	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
-	<gap:plugin name="cordova-plugin-android-support-v4" source="npm" />
-	<gap:plugin name="cordova-plugin-powermanagement-orig" source="npm" />
-	<gap:plugin name="cordova-plugin-battery-status" source="npm" />
-	<gap:plugin name="cordova-plugin-appinfo" source="npm" />
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-network-information" />
+	<plugin name="cordova-plugin-whitelist" source="npm" />
+	<plugin name="cordova-plugin-android-support-v4" source="npm" />
+	<plugin name="cordova-plugin-powermanagement-orig" source="npm" />
+	<plugin name="cordova-plugin-battery-status" source="npm" />
+	<plugin name="cordova-plugin-appinfo" source="npm" />
 		
 	<icon src="icon.png" />
 	<icon src="res/android/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
