@@ -204,6 +204,9 @@ var app = {
 				scrollerDiv.appendChild(tDiv);
 				app.startTeacherRotation();
 				app.loadingScreen(false);
+			} else {
+				globalCycleCount = 0;
+				app.startTeacherRotation();
 			}
 		})
 		.fail(function(e,f,g) {
