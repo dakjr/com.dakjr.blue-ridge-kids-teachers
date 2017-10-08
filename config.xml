@@ -4,7 +4,7 @@
 		xmlns:android	= "http://schemas.android.com/apk/res/android"
 		id				= "com.dakjr.blue-ridge-kids-teachers"
 		versionCode		= "10"
-		version			= "1.1.1">
+		version			= "1.1.2">
 		
 	<name>Blue Ridge Kids Teachers</name>
 	
