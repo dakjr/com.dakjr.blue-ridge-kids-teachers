@@ -122,73 +122,76 @@ var app = {
 			b: globalBatteryStatus
 		}, function(jsonp) {
 			
-			// only do loading if we get a positive response
-			app.loadingScreen(true);
-			document.getElementById('classroomOptionsDiv').style.display = 'none';
-			document.getElementById('classroomConfirmDiv').style.display = 'none';
-			document.getElementById('scrollerDiv').style.display = 'block';
+			if (json.serviceToShow != globalServiceToShow) {
+				globalServiceToShow = json.serviceToShow;
+				
+				// only do loading if we get a positive response and need to change services
+				app.loadingScreen(true);
+				document.getElementById('classroomOptionsDiv').style.display = 'none';
+				document.getElementById('classroomConfirmDiv').style.display = 'none';
+				document.getElementById('scrollerDiv').style.display = 'block';
 			
-			teacherList = jsonp.teacherList;
-			fontSize = jsonp.fontSize;
-			labelHeight = jsonp.labelHeight;
-			lineHeight = jsonp.lineHeight;
-			bottomAlign = jsonp.bottomAlign;
-			globalDisplayTime = jsonp.displayTime;
-			globalCycleLimit = jsonp.cycleLimit;
-			scrollerDiv = document.getElementById('scrollerDiv');
-			scrollerDiv.innerHTML = '';
-			globalTeacherCount = 0;
-			globalClassroomService = '';
-			for (var i in teacherList) {
-				teacherID = teacherList[i].teacherID;
-				teacherImage = teacherList[i].teacherImage;
-				teacherName = teacherList[i].teacherName;
-				globalClassroomService = teacherList[i].teacherClassroomService;
-				var iDiv = document.createElement('div');
-				iDiv.id = 'teacher_' + i;
-				iDiv.className = 'teacherImageContainer';
-				iDiv.innerHTML = '<img src="' + teacherImage + '" class="teacherImage" alt="' + i + '" title="' + i + '" onclick="app.closeScroller();" />';
-				scrollerDiv.appendChild(iDiv);
-				var qDiv = document.createElement('div');
-				qDiv.id = 'teacher_label_' + i;
-				qDiv.className = 'teacherLabelContainer';
-				qDiv.style.fontSize = fontSize;
-				qDiv.style.lineHeight = lineHeight;
-				qDiv.style.bottom = bottomAlign;
-				var rDiv = document.createElement('div');
-				rDiv.id = 'teacher_label_subA_' + i;
-				rDiv.className = 'teacherLabelSubA';
-				var sDiv = document.createElement('div');
-				sDiv.id = 'teacher_label_subB_' + i;
-				sDiv.innerHTML = teacherName;
-				rDiv.appendChild(sDiv);
-				qDiv.appendChild(rDiv);
-				scrollerDiv.appendChild(qDiv);
-				globalTeacherCount++;
-			}
-			var tDiv = document.createElement('div');
-			tDiv.id = 'teacherClassroomService';
-			if (globalClassroomService != '') {
-				tDiv.innerHTML = globalClassroomName + '<br />' + globalClassroomService;
-			} else {
-				tDiv.innerHTML = globalClassroomName;
-			}
-			tDiv.onclick = (function() { 
-				return function() {
-					clearInterval(globalTimer);
-					for (var q = 0; q < globalTeacherCount; q++) {
-						document.getElementById('teacher_' + q).style.display = 'none';
-						document.getElementById('teacher_label_' + q).style.display = 'none';
-					}
-					document.getElementById('teacherClassroomService').style.display = 'none';
-					globalCycleCount = 0;
-					currentTeacherId = 0;
-					app.loginAdminView();
+				teacherList = jsonp.teacherList;
+				fontSize = jsonp.fontSize;
+				labelHeight = jsonp.labelHeight;
+				lineHeight = jsonp.lineHeight;
+				bottomAlign = jsonp.bottomAlign;
+				globalDisplayTime = jsonp.displayTime;
+				globalCycleLimit = jsonp.cycleLimit;
+				scrollerDiv = document.getElementById('scrollerDiv');
+				scrollerDiv.innerHTML = '';
+				globalTeacherCount = 0;
+				globalClassroomService = '';
+				for (var i in teacherList) {
+					teacherID = teacherList[i].teacherID;
+					teacherImage = teacherList[i].teacherImage;
+					teacherName = teacherList[i].teacherName;
+					globalClassroomService = teacherList[i].teacherClassroomService;
+					var iDiv = document.createElement('div');
+					iDiv.id = 'teacher_' + i;
+					iDiv.className = 'teacherImageContainer';
+					iDiv.innerHTML = '<img src="' + teacherImage + '" class="teacherImage" alt="' + i + '" title="' + i + '" onclick="app.closeScroller();" />';
+					scrollerDiv.appendChild(iDiv);
+					var qDiv = document.createElement('div');
+					qDiv.id = 'teacher_label_' + i;
+					qDiv.className = 'teacherLabelContainer';
+					qDiv.style.fontSize = fontSize;
+					qDiv.style.lineHeight = lineHeight;
+					qDiv.style.bottom = bottomAlign;
+					var rDiv = document.createElement('div');
+					rDiv.id = 'teacher_label_subA_' + i;
+					rDiv.className = 'teacherLabelSubA';
+					var sDiv = document.createElement('div');
+					sDiv.id = 'teacher_label_subB_' + i;
+					sDiv.innerHTML = teacherName;
+					rDiv.appendChild(sDiv);
+					qDiv.appendChild(rDiv);
+					scrollerDiv.appendChild(qDiv);
+					globalTeacherCount++;
 				}
-			})();
-			scrollerDiv.appendChild(tDiv);
-			app.startTeacherRotation();
-			app.loadingScreen(false);
+				var tDiv = document.createElement('div');
+				tDiv.id = 'teacherClassroomService';
+				if (globalClassroomService != '') {
+					tDiv.innerHTML = globalClassroomName + '<br />' + globalClassroomService;
+				} else {
+					tDiv.innerHTML = globalClassroomName;
+				}
+				tDiv.onclick = (function() { 
+					return function() {
+						clearInterval(globalTimer);
+						for (var q = 0; q < globalTeacherCount; q++) {
+							document.getElementById('teacher_' + q).style.display = 'none';
+							document.getElementById('teacher_label_' + q).style.display = 'none';
+						}
+						document.getElementById('teacherClassroomService').style.display = 'none';
+						globalCycleCount = 0;
+						currentTeacherId = 0;
+						app.loginAdminView();
+					}
+				})();
+				scrollerDiv.appendChild(tDiv);
+				app.startTeacherRotation();
+				app.loadingScreen(false);
 		})
 		.fail(function(e,f,g) {
 			dummyVariable = -1;
