@@ -130,7 +130,19 @@ var app = {
 				document.getElementById('classroomOptionsDiv').style.display = 'none';
 				document.getElementById('classroomConfirmDiv').style.display = 'none';
 				document.getElementById('scrollerDiv').style.display = 'block';
+				
+				// clear out current teacher list
+				if (globalTeacherCount > 0) {
+					for (var q = 0; q < globalTeacherCount; q++) {
+						document.getElementById('teacher_' + q).style.display = 'none';
+						document.getElementById('teacher_label_' + q).style.display = 'none';
+					}
+					document.getElementById('teacherClassroomService').style.display = 'none';
+				}
+				globalCycleCount = 0;
+				currentTeacherId = 0;
 			
+				// populate new teacher list
 				teacherList = jsonp.teacherList;
 				fontSize = jsonp.fontSize;
 				labelHeight = jsonp.labelHeight;
@@ -213,13 +225,6 @@ var app = {
 	changeTeacher: function() {
 		if (globalCycleCount >= globalCycleLimit) {
 			clearInterval(globalTimer);
-			for (var q = 0; q < globalTeacherCount; q++) {
-				document.getElementById('teacher_' + q).style.display = 'none';
-				document.getElementById('teacher_label_' + q).style.display = 'none';
-			}
-			document.getElementById('teacherClassroomService').style.display = 'none';
-			globalCycleCount = 0;
-			currentTeacherId = 0;
 			app.loadClassroom();
 		} else {
 			document.getElementById('teacher_' + currentTeacherId).style.display = 'none';
