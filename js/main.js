@@ -192,6 +192,7 @@ var app = {
 				scrollerDiv.appendChild(tDiv);
 				app.startTeacherRotation();
 				app.loadingScreen(false);
+			}
 		})
 		.fail(function(e,f,g) {
 			dummyVariable = -1;
