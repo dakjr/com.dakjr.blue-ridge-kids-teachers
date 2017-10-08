@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns			= "http://www.w3.org/ns/widgets"
+		xmlns:gap		= "http://phonegap.com/ns/1.0"
+		xmlns:android	= "http://schemas.android.com/apk/res/android"
+		id				= "com.dakjr.blue-ridge-kids-teachers"
+		versionCode		= "10"
+		version			= "1.1.0">
+		
+	<name>Blue Ridge Kids Teachers</name>
+	
+	<description>
+		Blue Ridge Kids Teachers
+	</description>
+	
+	<author href="http://apps.dakjr.com" email="apps@dakjr.com">
+		DAKJR
+	</author>
+	
+	<preference name="orientation" value="portrait" />
+	<preference name="target-device" value="universal" />
+	<preference name="fullscreen" value="true" />
+	<preference name="permissions" value="none" />
+	<preference name="phonegap-version" value="cli-6.5.0" />
+	<preference name="androidLaunchMode" value="singleTask" />
+	
+	<platform name="android" />
+	
+	<gap:plugin name="cordova-plugin-device" />
+	<gap:plugin name="cordova-plugin-network-information" />
+	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
+	<gap:plugin name="cordova-plugin-android-support-v4" source="npm" />
+	<gap:plugin name="cordova-plugin-powermanagement-orig" source="npm" />
+	<gap:plugin name="cordova-plugin-battery-status" source="npm" />
+	<gap:plugin name="cordova-plugin-appinfo" source="npm" />
+		
+	<icon src="icon.png" />
+	<icon src="res/android/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
+	<icon src="res/android/mdpi.png" gap:platform="android" gap:qualifier="mdpi" />
+	<icon src="res/android/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />
+	<icon src="res/android/xhdpi.png" gap:platform="android" gap:qualifier="xhdpi" />
+	
+	<access origin="*://*.dakjr.com" />
+	<access origin="*://*.amazonaws.com" />
+	<access origin="*://*.planningcenteronline.com" />
+	
+</widget>

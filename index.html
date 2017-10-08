@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<link id="pageInitStyle" href="css/styles.css" rel="stylesheet" />
+		<link id="pageMainStyle" href="" rel="stylesheet" />
+		<link id="pageFontStyle" href='https://fonts.googleapis.com/css?family=Roboto:400,700,700italic,400italic' rel='stylesheet' type='text/css' />
+	</head>
+	
+	<body>
+	
+		<!--- load required scripts --->
+		<script src="phonegap.js"></script>
+		<script src="lib/jquery-1.8.2.min.js"></script>
+		<script src="js/main.js"></script>
+		
+		<!--- setup containers/pages --->	
+		<div id='debugDiv'><div id='contentDiv' style='padding:20px;'></div></div>
+		<div id='batteryDiv'></div>
+		<div id='classroomOptionsDiv'></div>
+		<div id='loadingDiv'><div class='loadingDivSubA'><div><img src='http://kiosk.dakjr.com/assets/img/loading.gif' /><br /><br />Loading Data...</div></div></div>
+		<div id='classroomConfirmDiv'><div id='classroomConfirmDisplay'></div><br /><br /><a href='javascript:app.doMainScreen();' class='selectButton'><< Cancel</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:app.loadClassroom();' class='selectButton'>Confirm >></a></div>
+		<div id='scrollerDiv'></div>
+		<div id='adminDiv'></div>
+		<div id='adminLoginDiv'><br /><img src="http://kiosk.dakjr.com/assets/img/logo.png" id="logo" /><br /><br /><br />Enter Admin Password:<br /><br />
+			<table width='85%' cellspacing='0' cellpadding='0' border='0' id='numberPadTable'>
+				<tr>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('A');"><div class='numberPadItem'>1</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('B');"><div class='numberPadItem'>2</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('C');"><div class='numberPadItem'>3</div></a></td>
+				</tr>
+				<tr>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('D');"><div class='numberPadItem'>4</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('E');"><div class='numberPadItem'>5</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('F');"><div class='numberPadItem'>6</div></a></td>
+				</tr>
+				<tr>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('G');"><div class='numberPadItem'>7</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('H');"><div class='numberPadItem'>8</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('I');"><div class='numberPadItem'>9</div></a></td>
+				</tr>
+				<tr>
+					<td class='numberPadCell'><a href=""><div class='numberPadItem'>*</div></a></td>
+					<td class='numberPadCell'><a href="javascript:app.numberPad('J');"><div class='numberPadItem'>0</div></a></td>
+					<td class='numberPadCell'><a href=""><div class='numberPadItem'>#</div></a></td>
+				</tr>
+			</table>
+		</div>
+		<div id='newVersionDiv'><br /><img src="http://kiosk.dakjr.com/assets/img/logo.png" id="logo" /><br /><br /><br />A new version of the<br />application is available<br /><br /><br /><br /><a id='newVersionLink' href='' class='selectButton'>Update Now</a></div>
+		
+		<script type="text/javascript">
+			// global variables
+			var globalNetworkState = null;
+			var globalDeviceUUID = null;
+			var globalClassroomId = null;
+			var globalTimer = null;
+			var globalDisplayTime = 5000;
+			var globalTeacherCount = 0;
+			var currentTeacherId = 0;
+			var globalCycleCount = 0;
+			var globalCycleLimit = 0;
+			var globalBatteryStatus = 0;
+			var globalClassroomName = '';
+			var globalAppVersion = '';
+			var adminScreenTimeout = null;
+			var globalAdminPassword = '';
+			
+			function onBatteryStatus(info) {
+				updateBatteryDisplay(info.level,info.isPlugged);
+			}
+			
+			function updateBatteryDisplay(l,p) {
+				globalBatteryStatus = l;
+				document.getElementById('batteryDiv').innerHTML = l + '% ' + p;
+			}
+			
+			// create a displayPush function to streamline output
+			function displayPush( m ) {
+				var d = new Date();
+				var n = d.toLocaleTimeString();
+				var ms = d.getMilliseconds();
+				$('#contentDiv').prepend('<span style="font-weight:bold;text-decoration:underline;">' + n + '</span><br />' + m + '<br /><br />');
+			}
+			
+			app.reloadStylesheet();
+			displayPush('Reloaded Stylesheet');
+			
+			// start device ready listener (and define function actions)
+			document.addEventListener("deviceready", function() {
+
+				// track device's UUID
+				displayPush('Device Ready: ' + device.uuid);
+				globalDeviceUUID = device.uuid;
+				
+				// get application's current version
+				navigator.appInfo.getAppInfo(function(appInfo) {
+					globalAppVersion = appInfo.version;
+					displayPush(appInfo.identifier);
+					displayPush(appInfo.version);
+					displayPush(appInfo.build);
+				}, function(err) {
+					displayPush(err);
+				});
+				displayPush('Version: ' + globalAppVersion);
+
+				// kick off sequence of startup functions
+				app.initialize();				
+				
+			});
+			
+		</script>
+
+	</body>
+</html>
